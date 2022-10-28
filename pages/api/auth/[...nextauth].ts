@@ -25,7 +25,7 @@ export const authOptions: NextAuthOptions = {
           placeholder: "password",
         },
       },
-      async authorize(credentials): Promise<any> {
+      async authorize(credentials) {
         return await checkUserEmailPassword(
           credentials!.email,
           credentials!.password
