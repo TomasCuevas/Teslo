@@ -1,8 +1,7 @@
 import { useContext, useState } from "react";
-import { GetServerSideProps, NextPage } from "next";
+import { NextPage } from "next";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { TextField } from "@mui/material";
 
@@ -18,23 +17,22 @@ import { ButtonPrimary, Chip } from "../../components";
 //* utils *//
 import { isEmail } from "../../utils/validations";
 
+//* hooks *//
+import { useAuthenticated } from "../../hooks";
+
 //* context *//
 import { AuthContext } from "../../context/auth/AuthContext";
 
 //* interfaces *//
-interface Props {
-  query: string;
-}
-
 interface FormData {
   name: string;
   email: string;
   password: string;
 }
 
-const RegisterPage: NextPage<Props> = ({ query = "/" }) => {
+const RegisterPage: NextPage = () => {
   const { onRegister } = useContext(AuthContext);
-  const { status } = useSession();
+  const { isAuthenticated } = useAuthenticated();
 
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -46,6 +44,7 @@ const RegisterPage: NextPage<Props> = ({ query = "/" }) => {
   } = useForm<FormData>();
 
   const router = useRouter();
+  const query = router.query.p ? router.query.p.toString() : "/";
 
   const onRegisterUser = async ({ name, email, password }: FormData) => {
     setShowError(false);
@@ -62,8 +61,8 @@ const RegisterPage: NextPage<Props> = ({ query = "/" }) => {
     router.replace(destination);
   };
 
-  if (status === "authenticated") router.replace(query);
-  if (status === "unauthenticated") {
+  if (isAuthenticated === "authenticated") router.replace(query);
+  if (isAuthenticated === "unauthenticated") {
     return (
       <AuthLayout title="Registro" pageDescription="Registrate en Teslo">
         <section className="flex w-[300px] flex-col items-center gap-5 sm:w-[350px]">
@@ -126,16 +125,6 @@ const RegisterPage: NextPage<Props> = ({ query = "/" }) => {
   }
 
   return <LoadingLayout title="Cargando" />;
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { p = "/" } = query;
-
-  return {
-    props: {
-      query: p,
-    },
-  };
 };
 
 export default RegisterPage;

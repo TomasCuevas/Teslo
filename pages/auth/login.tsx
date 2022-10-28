@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { GetServerSideProps, NextPage } from "next";
+import { NextPage } from "next";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { signIn, getProviders, useSession } from "next-auth/react";
+import { signIn, getProviders } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { Button, TextField } from "@mui/material";
 
@@ -19,18 +19,17 @@ import { ButtonPrimary, Chip } from "../../components";
 //* utils *//
 import { isEmail } from "../../utils/validations";
 
-//* interfaces *//
-interface Props {
-  query: string;
-}
+//* hooks *//
+import { useAuthenticated } from "../../hooks/useAuthenticated";
 
+//* interfaces *//
 interface FormData {
   email: string;
   password: string;
 }
 
-const LoginPage: NextPage<Props> = ({ query = "/" }) => {
-  const { status } = useSession();
+const LoginPage: NextPage = () => {
+  const { isAuthenticated } = useAuthenticated();
 
   const [showError, setShowError] = useState(false);
   const [providers, setProviders] = useState<any>({});
@@ -42,14 +41,16 @@ const LoginPage: NextPage<Props> = ({ query = "/" }) => {
   } = useForm<FormData>();
 
   const router = useRouter();
+  const query = router.query.p ? router.query.p.toString() : "/";
+  console.log(query);
 
   useEffect(() => {
-    if (status === "unauthenticated") {
+    if (isAuthenticated === "unauthenticated") {
       getProviders().then((prov) => {
         setProviders(prov);
       });
     }
-  }, [status]);
+  }, [isAuthenticated]);
 
   const onLoginUser = async ({ email, password }: FormData) => {
     setShowError(false);
@@ -66,8 +67,8 @@ const LoginPage: NextPage<Props> = ({ query = "/" }) => {
     }, 4000);
   };
 
-  if (status === "authenticated") router.replace(query);
-  if (status === "unauthenticated") {
+  if (isAuthenticated === "authenticated") router.replace(query);
+  if (isAuthenticated === "unauthenticated") {
     return (
       <AuthLayout title="Ingresar" pageDescription="Inicia sesion en Teslo">
         <section className="flex w-[300px] flex-col items-center gap-5 sm:w-[350px]">
@@ -144,16 +145,6 @@ const LoginPage: NextPage<Props> = ({ query = "/" }) => {
   }
 
   return <LoadingLayout title="Cargando" />;
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { p = "/" } = query;
-
-  return {
-    props: {
-      query: p,
-    },
-  };
 };
 
 export default LoginPage;
