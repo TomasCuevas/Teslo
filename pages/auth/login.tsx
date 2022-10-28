@@ -42,7 +42,6 @@ const LoginPage: NextPage = () => {
 
   const router = useRouter();
   const query = router.query.p ? router.query.p.toString() : "/";
-  console.log(query);
 
   useEffect(() => {
     if (isAuthenticated === "unauthenticated") {
