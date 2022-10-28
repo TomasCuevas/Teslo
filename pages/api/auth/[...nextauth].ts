@@ -25,7 +25,7 @@ export const authOptions: NextAuthOptions = {
           placeholder: "password",
         },
       },
-      async authorize(credentials) {
+      async authorize(credentials): Promise<any> {
         return await checkUserEmailPassword(
           credentials!.email,
           credentials!.password
@@ -59,7 +59,6 @@ export const authOptions: NextAuthOptions = {
     },
 
     async session({ session, token, user }) {
-      session.accessToken = token.accessToken;
       session.user = token.user as any;
 
       return session;
