@@ -5,16 +5,11 @@ import useSWR from "swr";
 import { IOrder } from "../interfaces/order";
 import { IError } from "../interfaces/error";
 
-interface Props {
-  id: string;
-  query?: string;
-}
-
 interface Return {
   order: IOrder | undefined;
 }
 
-export const useGetOrder = ({ id, query = "/" }: Props): Return => {
+export const useGetOrder = (id: string, query = "/"): Return => {
   const { data: order, error } = useSWR<IOrder>(`/api/orders/${id}`);
   const router = useRouter();
 

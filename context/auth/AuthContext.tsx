@@ -1,8 +1,8 @@
 import { createContext, useEffect, useState } from "react";
-import Cookies from "js-cookie";
-import axios from "axios";
-import { useRouter } from "next/router";
 import { useSession, signOut, signIn } from "next-auth/react";
+import axios from "axios";
+import Cookies from "js-cookie";
+
 import tesloApi from "../../axios/tesloApi";
 import { IUser } from "../../interfaces/user";
 
@@ -28,7 +28,6 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const router = useRouter();
   const { data, status } = useSession();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<IUser>();
@@ -39,22 +38,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setIsLoggedIn(true);
     }
   }, [data, status]);
-
-  const validateToken = async () => {
-    if (!Cookies.get("token")) return;
-
-    try {
-      const { data } = await tesloApi.post("/user/validate-token");
-      const { token, user } = data;
-
-      Cookies.set("token", token);
-
-      setIsLoggedIn(true);
-      setUser(user);
-    } catch (error) {
-      Cookies.set("token", "");
-    }
-  };
 
   const onRegister = async (
     name: string,

@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
+//* interfaces *//
+type status = "loading" | "authenticated" | "unauthenticated";
+
 interface Return {
-  authenticated: "loading" | "authenticated" | "unauthenticated";
+  isAuthenticated: status;
 }
 
-export const useAuthenticated = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState("loading");
+export const useAuthenticated = (): Return => {
+  const [isAuthenticated, setIsAuthenticated] = useState<status>("loading");
   const { data: session, status } = useSession();
 
   useEffect(() => {

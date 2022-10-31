@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from "react";
-import { NextPage, GetServerSideProps } from "next";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { CircularProgress } from "@mui/material";
@@ -26,15 +26,12 @@ import tesloApi from "../../axios/tesloApi";
 //* interfaces *//
 import { OrderResponseBody } from "../../interfaces/paypal";
 
-interface Props {
-  id: string;
-}
-
-const OrderPage: NextPage<Props> = ({ id }) => {
-  const [isPaying, setIsPaying] = useState<boolean>(false);
-  const { order } = useGetOrder({ id, query: `/orders/${id}` });
-
+const OrderPage: NextPage = () => {
   const router = useRouter();
+  const { id } = router.query as { id: string };
+
+  const [isPaying, setIsPaying] = useState<boolean>(false);
+  const { order } = useGetOrder(id, `/orders/${id}`);
 
   if (order) {
     const { shippingAddress } = order;
@@ -47,14 +44,13 @@ const OrderPage: NextPage<Props> = ({ id }) => {
       setIsPaying(true);
 
       try {
-        const { data } = await tesloApi.post("/orders/pay", {
+        await tesloApi.post("/orders/pay", {
           transactionId: details.id,
           orderId: order._id,
         });
 
         router.reload();
       } catch (error) {
-        console.log(error);
         setIsPaying(false);
         alert(error);
       }
@@ -142,16 +138,6 @@ const OrderPage: NextPage<Props> = ({ id }) => {
   }
 
   return <LoadingLayout title="Cargando" />;
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { id = "" } = query;
-
-  return {
-    props: {
-      id,
-    },
-  };
 };
 
 export default OrderPage;

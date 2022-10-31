@@ -1,7 +1,7 @@
-import { useContext } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useContext, useEffect } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { MenuItem, TextField } from "@mui/material";
 
@@ -14,6 +14,9 @@ import { LoadingLayout, ShopLayout } from "../../components/layouts";
 //* utils *//
 import { countries, getAddressFromCookies } from "../../utils";
 
+//* hooks *//
+import { useAuthenticated } from "../../hooks";
+
 //* context *//
 import { CartContext } from "../../context/cart/CartContext";
 
@@ -21,8 +24,8 @@ import { CartContext } from "../../context/cart/CartContext";
 import { IAddress } from "../../interfaces/address";
 
 const AddressPage: NextPage = () => {
-  const { status } = useSession();
-  const { updateAddress } = useContext(CartContext);
+  const { isAuthenticated } = useAuthenticated();
+  const { updateAddress, numberOfItems } = useContext(CartContext);
 
   const router = useRouter();
   const {
@@ -38,10 +41,14 @@ const AddressPage: NextPage = () => {
     return router.push("/checkout/summary");
   };
 
-  if (status === "unauthenticated") {
+  useEffect(() => {
+    if (numberOfItems === 0) router.push("/");
+  }, [numberOfItems]);
+
+  if (isAuthenticated === "unauthenticated") {
     router.push("/auth/login?p=/checkout/address");
   }
-  if (status === "authenticated") {
+  if (isAuthenticated === "authenticated" && numberOfItems > 0) {
     return (
       <ShopLayout
         title="Direccion"

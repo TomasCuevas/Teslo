@@ -1,9 +1,8 @@
 import { createContext, useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 import tesloApi from "../../axios/tesloApi";
-
 import { ICartProduct } from "../../interfaces/cart";
 import { IOrder, ShippingAddress } from "../../interfaces/order";
 

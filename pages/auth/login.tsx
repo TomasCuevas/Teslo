@@ -60,10 +60,12 @@ const LoginPage: NextPage = () => {
       password,
     });
 
-    if (signInStatus?.ok === false) setShowError(true);
-    setTimeout(() => {
-      setShowError(false);
-    }, 4000);
+    if (signInStatus?.ok === false) {
+      setShowError(true);
+      setTimeout(() => {
+        setShowError(false);
+      }, 4000);
+    }
   };
 
   if (isAuthenticated === "authenticated") router.replace(query);

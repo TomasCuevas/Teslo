@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useState } from "react";
-import { GetServerSideProps, NextPage } from "next";
+import { useContext, useEffect, useState } from "react";
+import { NextPage } from "next";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 
 //* layout *//
 import { ShopLayout, LoadingLayout } from "../../components/layouts";
@@ -17,15 +16,15 @@ import {
   Chip,
 } from "../../components";
 
+//* hooks *//
+import { useAuthenticated } from "../../hooks";
+
 //* context *//
 import { CartContext } from "../../context/cart/CartContext";
 
 const SummaryPage: NextPage = () => {
-  const { status } = useSession();
-  const {
-    cart: { numberOfItems },
-    createOrder,
-  } = useContext(CartContext);
+  const { isAuthenticated } = useAuthenticated();
+  const { numberOfItems, createOrder } = useContext(CartContext);
 
   const [isPosting, setIsPosting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -46,10 +45,14 @@ const SummaryPage: NextPage = () => {
     router.replace(`/orders/${message}`);
   };
 
-  if (status === "unauthenticated") {
+  useEffect(() => {
+    if (numberOfItems === 0) router.push("/");
+  }, []);
+
+  if (isAuthenticated === "unauthenticated") {
     router.push("/auth/login?p=/checkout/summary");
   }
-  if (status === "authenticated") {
+  if (isAuthenticated === "authenticated" && numberOfItems > 0) {
     return (
       <ShopLayout
         title="Resumen de orden"
@@ -91,32 +94,6 @@ const SummaryPage: NextPage = () => {
   }
 
   return <LoadingLayout title="Cargando" />;
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const { firstName, lastName, address, zip, city, country, phone } =
-    req.cookies;
-
-  if (
-    !firstName ||
-    !lastName ||
-    !address ||
-    !zip ||
-    !city ||
-    !country ||
-    !phone
-  ) {
-    return {
-      redirect: {
-        destination: "/checkout/address",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
 };
 
 export default SummaryPage;

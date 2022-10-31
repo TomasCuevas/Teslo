@@ -41,9 +41,6 @@ const getAllOrders = async (
     const orders = await Order.find({ user: _id })
       .lean()
       .populate("user", "name email");
-    if (!orders) {
-      return res.status(404);
-    }
 
     return res.status(200).json(orders);
   } catch (error) {
