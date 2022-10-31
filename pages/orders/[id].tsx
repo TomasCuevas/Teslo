@@ -108,7 +108,9 @@ const OrderPage: NextPage = () => {
               </div>
               <div
                 className={
-                  order.isPaid || isPaying ? "hidden" : "flex w-full flex-col"
+                  order.isPaid || isPaying
+                    ? "hidden"
+                    : "relative z-0 flex w-full flex-col"
                 }
               >
                 <PayPalButtons
