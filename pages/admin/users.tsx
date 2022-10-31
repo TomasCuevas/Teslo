@@ -22,7 +22,7 @@ import { IUser } from "../../interfaces/user";
 
 const UsersPage: NextPage = () => {
   const [users, setUsers] = useState<IUser[]>([]);
-  const { isAdmin } = useAdmin({ query: "/admin/users" });
+  const { isAdmin } = useAdmin("/", "/admin/users");
 
   const { data } = useSWR<IUser[]>("/api/admin/users");
 

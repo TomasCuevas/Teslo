@@ -50,7 +50,7 @@ interface Props {
 }
 
 const ProductAdminPage: NextPage<Props> = ({ product }) => {
-  const { isAdmin } = useAdmin({ query: `/admin/products/${product.slug}` });
+  const { isAdmin } = useAdmin("/", `/admin/products/${product.slug}`);
   const [newTag, setNewTag] = useState<string>("");
   const [isSaving, setIsSaving] = useState<boolean>(false);
 

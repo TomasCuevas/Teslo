@@ -72,7 +72,7 @@ import { IProduct } from "../../../interfaces/products";
 
 const ProductsPage: NextPage = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
-  const { isAdmin } = useAdmin({ query: "/admin/products" });
+  const { isAdmin } = useAdmin("/", "/admin/products");
 
   const { data } = useSWR<IProduct[]>("/api/admin/products");
   const router = useRouter();

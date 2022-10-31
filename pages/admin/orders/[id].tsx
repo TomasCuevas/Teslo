@@ -32,7 +32,7 @@ interface Props {
 }
 
 const OrderPageByAdmin: NextPage<Props> = ({ order }) => {
-  const { isAdmin } = useAdmin({ query: `/admin/orders/${[order._id]}` });
+  const { isAdmin } = useAdmin("/", `/admin/orders/${[order._id]}`);
   const { shippingAddress } = order;
 
   if (isAdmin) {

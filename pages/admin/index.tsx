@@ -28,7 +28,7 @@ import { DashboardSummaryResponse } from "../../interfaces/dashboard";
 
 const DashboardPage: NextPage = () => {
   const [refreshIn, setRefreshIn] = useState<number>(30);
-  const { isAdmin } = useAdmin({ query: "/admin" });
+  const { isAdmin } = useAdmin("/", "/admin");
 
   const { data } = useSWR<DashboardSummaryResponse>("/api/admin/dashboard", {
     refreshInterval: 30 * 1000,

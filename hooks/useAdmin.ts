@@ -7,16 +7,11 @@ import { IUser } from "../interfaces/user";
 
 type ValidUser = "loading" | "valid" | "invalid";
 
-interface Props {
-  redirectTo?: string;
-  query?: string;
-}
-
 interface Return {
   isAdmin: boolean;
 }
 
-export const useAdmin = ({ redirectTo = "/", query = "/" }: Props): Return => {
+export const useAdmin = (redirectTo = "/", query = "/"): Return => {
   const { data: session, status } = useSession();
   const [isValidUser, setIsValidUser] = useState<ValidUser>("loading");
 

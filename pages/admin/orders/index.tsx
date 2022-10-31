@@ -101,7 +101,7 @@ import { IUser } from "../../../interfaces/user";
 
 const OrdersPage: NextPage = () => {
   const [orders, setOrders] = useState<IOrder[]>([]);
-  const { isAdmin } = useAdmin({ query: "/admin/orders" });
+  const { isAdmin } = useAdmin("/", "/admin/orders");
 
   const { data } = useSWR<IOrder[]>("/api/admin/orders");
 

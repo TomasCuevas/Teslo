@@ -38,14 +38,23 @@ const searchProduct = async (
 
     await connect();
 
-    const products = await ProductModel.find({ $text: { $search: query } })
+    let products = await ProductModel.find({ $text: { $search: query } })
       .select("title images price inStock slug -_id")
       .lean();
-    if (!products) {
+
+    if (products.length < 1) {
       return res.status(404).json({
-        message: "No se encontraron productos que coincidan con la busqueda.",
+        message: "No se encontro ningun producto con la busqueda realizada.",
       });
     }
+
+    products.map((product) => {
+      product.images = product.images.map((image) => {
+        return image.includes("http")
+          ? image
+          : `${process.env.HOST_NAME}products/${image}`;
+      });
+    });
 
     return res.status(200).json(products);
   } catch (error) {
