@@ -24,10 +24,12 @@ export const useSearchProducts = (query: string): Return => {
     if (searchProducts) {
       setProducts(searchProducts);
       setError(false);
+      return;
     }
-    if (searchError && allProducts) {
+    if (!searchProducts && allProducts) {
       setProducts(allProducts);
       setError(true);
+      return;
     }
   }, [searchProducts]);
 
