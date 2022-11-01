@@ -14,7 +14,7 @@ const HomePage: NextPage = () => {
 
   return (
     <ShopLayout
-      title="Teslo"
+      title="Teslo | Men"
       pageDescription="Encuentra los mejores productos para hombres en Teslo"
     >
       <h2 className="mb-1 text-xl font-light">Productos de Hombres</h2>

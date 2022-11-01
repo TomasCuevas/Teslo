@@ -3,10 +3,10 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 
 //* layout *//
-import { ShopLayout, LoadingLayout } from "../../components/layouts";
+import { ShopLayout } from "../../components/layouts";
 
 //* components *//
-import { CardList, OrderSummary } from "../../components";
+import { CardList, FullScreenLoading, OrderSummary } from "../../components";
 
 //* context *//
 import { CartContext } from "../../context/cart/CartContext";
@@ -27,7 +27,7 @@ const CartPage: NextPage = () => {
         title={`Carrito - ${numberOfItems} productos`}
         pageDescription="Carrito de compras de la tienda"
       >
-        <h1 className="mb-1 text-3xl font-bold">Carrito</h1>
+        <h1 className="mb-1 animate-fadeIn text-3xl font-bold">Carrito</h1>
         <div className="flex flex-col gap-5 sm:flex-row">
           <section className="flex w-full animate-fadeIn flex-col gap-5 sm:w-8/12">
             <CardList editable />
@@ -48,7 +48,15 @@ const CartPage: NextPage = () => {
     );
   }
 
-  return <LoadingLayout title="Cargando" />;
+  return (
+    <ShopLayout
+      title={`Teslo | Cart`}
+      pageDescription="Carrito de compras de la tienda"
+    >
+      <h1 className="mb-1 animate-fadeIn text-3xl font-bold">Carrito</h1>
+      <FullScreenLoading />
+    </ShopLayout>
+  );
 };
 
 export default CartPage;

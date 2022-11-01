@@ -6,10 +6,10 @@ import { useForm } from "react-hook-form";
 import { MenuItem, TextField } from "@mui/material";
 
 //* components *//
-import { ButtonPrimary } from "../../components";
+import { ButtonPrimary, FullScreenLoading } from "../../components";
 
 //* layout *//
-import { LoadingLayout, ShopLayout } from "../../components/layouts";
+import { ShopLayout } from "../../components/layouts";
 
 //* utils *//
 import { countries, getAddressFromCookies } from "../../utils";
@@ -154,7 +154,14 @@ const AddressPage: NextPage = () => {
     );
   }
 
-  return <LoadingLayout title="Cargando" />;
+  return (
+    <ShopLayout
+      title="Direccion"
+      pageDescription="Confirmar direccion del destino"
+    >
+      <FullScreenLoading />
+    </ShopLayout>
+  );
 };
 
 export default AddressPage;

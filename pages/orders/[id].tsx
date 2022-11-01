@@ -12,10 +12,16 @@ import {
 } from "@mui/icons-material";
 
 //* layout *//
-import { LoadingLayout, ShopLayout } from "../../components/layouts";
+import { ShopLayout } from "../../components/layouts";
 
 //* components *//
-import { CardList, OrderSummary, Chip, OrderDirection } from "../../components";
+import {
+  CardList,
+  OrderSummary,
+  Chip,
+  OrderDirection,
+  FullScreenLoading,
+} from "../../components";
 
 //* hooks *//
 import { useGetOrder } from "../../hooks/useGetOrder";
@@ -139,7 +145,14 @@ const OrderPage: NextPage = () => {
     );
   }
 
-  return <LoadingLayout title="Cargando" />;
+  return (
+    <ShopLayout
+      title="Resumen de la orden"
+      pageDescription="Resumen de la orden"
+    >
+      <FullScreenLoading />
+    </ShopLayout>
+  );
 };
 
 export default OrderPage;

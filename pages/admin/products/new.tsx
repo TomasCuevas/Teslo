@@ -1,13 +1,14 @@
 import { NextPage } from "next";
 
 //* layout *//
-import { AdminLayout, LoadingLayout } from "../../../components/layouts";
+import { AdminLayout } from "../../../components/layouts";
 
 //* components *//
 import {
   ProductEditFormLeft,
   ButtonPrimary,
   ProductEditFormRight,
+  FullScreenLoading,
 } from "../../../components";
 
 //* icons *//
@@ -79,7 +80,16 @@ const NewProductAdminPage: NextPage = () => {
     );
   }
 
-  return <LoadingLayout title="Cargando" />;
+  return (
+    <AdminLayout
+      title={"Producto"}
+      subtitle={`Editando: ${product.title}`}
+      icon={<DriveFileRenameOutline />}
+      pageDescription={`Pagina de edicion del producto ${product.title}`}
+    >
+      <FullScreenLoading />
+    </AdminLayout>
+  );
 };
 
 export default NewProductAdminPage;

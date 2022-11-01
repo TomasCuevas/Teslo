@@ -8,7 +8,7 @@ import {
 } from "@mui/icons-material";
 
 //* layout *//
-import { AdminLayout, LoadingLayout } from "../../../components/layouts";
+import { AdminLayout } from "../../../components/layouts";
 
 //* components *//
 import {
@@ -16,6 +16,7 @@ import {
   OrderDirection,
   OrderSummary,
   Chip,
+  FullScreenLoading,
 } from "../../../components";
 
 //* hooks *//
@@ -90,7 +91,16 @@ const OrderPageByAdmin: NextPage<Props> = ({ order }) => {
     );
   }
 
-  return <LoadingLayout title="Cargando" />;
+  return (
+    <AdminLayout
+      title="Resumen de la orden:"
+      subtitle={`${order._id}`}
+      icon={<AirplaneTicketOutlined />}
+      pageDescription={`Resumen de la orden ${order._id} para administrador`}
+    >
+      <FullScreenLoading />
+    </AdminLayout>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {

@@ -1,5 +1,5 @@
+import { NextPage } from "next";
 import NextLink from "next/link";
-import type { NextPage } from "next";
 
 //* icons *//
 import { RemoveShoppingCartOutlined } from "@mui/icons-material";

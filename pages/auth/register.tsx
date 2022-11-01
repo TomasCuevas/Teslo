@@ -9,10 +9,10 @@ import { TextField } from "@mui/material";
 import { ErrorOutline } from "@mui/icons-material";
 
 //* layout *//
-import { AuthLayout, LoadingLayout } from "../../components/layouts";
+import { AuthLayout } from "../../components/layouts";
 
 //* components *//
-import { ButtonPrimary, Chip } from "../../components";
+import { ButtonPrimary, Chip, FullScreenLoading } from "../../components";
 
 //* utils *//
 import { isEmail } from "../../utils/validations";
@@ -124,7 +124,11 @@ const RegisterPage: NextPage = () => {
     );
   }
 
-  return <LoadingLayout title="Cargando" />;
+  return (
+    <AuthLayout title="Registro" pageDescription="Registrate en Teslo">
+      <FullScreenLoading />
+    </AuthLayout>
+  );
 };
 
 export default RegisterPage;

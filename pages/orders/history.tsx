@@ -4,10 +4,10 @@ import NextLink from "next/link";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 
 //* layouts *//
-import { ShopLayout, LoadingLayout } from "../../components/layouts";
+import { ShopLayout } from "../../components/layouts";
 
 //* components *//
-import { Chip } from "../../components";
+import { Chip, FullScreenLoading } from "../../components";
 
 //* hooks *//
 import { useGetOrders } from "../../hooks";
@@ -124,7 +124,7 @@ const HistoryPage: NextPage = () => {
         title="Historial de ordenes"
         pageDescription="Historial de ordenes del cliente"
       >
-        <h1 className="mb-1 break-words text-2xl font-bold text-primary lg:text-3xl">
+        <h1 className="mb-1 animate-fadeIn break-words text-2xl font-bold text-primary lg:text-3xl">
           Historial de ordenes
         </h1>
         <div className="mt-2 animate-fadeIn">
@@ -141,7 +141,14 @@ const HistoryPage: NextPage = () => {
     );
   }
 
-  return <LoadingLayout title="Cargando" />;
+  return (
+    <ShopLayout
+      title="Historial de ordenes"
+      pageDescription="Historial de ordenes del cliente"
+    >
+      <FullScreenLoading />
+    </ShopLayout>
+  );
 };
 
 export default HistoryPage;

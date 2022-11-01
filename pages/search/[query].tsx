@@ -2,10 +2,10 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 
 //* components *//
-import { ProductList } from "../../components/products/ProductList";
+import { ProductList, FullScreenLoading } from "../../components";
 
 //* layout *//
-import { ShopLayout, LoadingLayout } from "../../components/layouts";
+import { ShopLayout } from "../../components/layouts";
 
 //* hooks *//
 import { useSearchProducts } from "../../hooks";
@@ -33,7 +33,14 @@ const SearchPage: NextPage = () => {
     );
   }
 
-  return <LoadingLayout title="Cargando" />;
+  return (
+    <ShopLayout
+      title="Teslo | Search"
+      pageDescription="Encuentra los mejores productos en Teslo Shop"
+    >
+      <FullScreenLoading />
+    </ShopLayout>
+  );
 };
 
 export default SearchPage;

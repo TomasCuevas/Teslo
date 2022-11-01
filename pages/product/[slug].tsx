@@ -62,7 +62,7 @@ const ProductPage: NextPage<Props> = ({ product }) => {
 
   return (
     <ShopLayout title={product.title} pageDescription={product.description}>
-      <article className="flex w-full flex-col gap-10 sm:flex-row">
+      <article className="flex w-full animate-fadeIn flex-col gap-10 sm:flex-row">
         <section className="sm:w-7/12">
           <ProductSlideshow images={product.images} />
         </section>

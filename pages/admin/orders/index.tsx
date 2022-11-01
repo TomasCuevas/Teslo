@@ -7,10 +7,10 @@ import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { ConfirmationNumberOutlined } from "@mui/icons-material";
 
 //* layout *//
-import { AdminLayout, LoadingLayout } from "../../../components/layouts";
+import { AdminLayout } from "../../../components/layouts";
 
 //* components *//
-import { Chip } from "../../../components";
+import { Chip, FullScreenLoading } from "../../../components";
 
 //* hooks *//
 import { useAdmin } from "../../../hooks";
@@ -138,7 +138,16 @@ const OrdersPage: NextPage = () => {
     );
   }
 
-  return <LoadingLayout title="Cargando" />;
+  return (
+    <AdminLayout
+      title="Ordenes"
+      subtitle="Mantenimiento de ordenes"
+      icon={<ConfirmationNumberOutlined />}
+      pageDescription="Pagina de mantenimiento de ordenes para administradores"
+    >
+      <FullScreenLoading />
+    </AdminLayout>
+  );
 };
 
 export default OrdersPage;

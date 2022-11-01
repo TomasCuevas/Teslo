@@ -5,7 +5,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 
 //* layout *//
-import { ShopLayout, LoadingLayout } from "../../components/layouts";
+import { ShopLayout } from "../../components/layouts";
 
 //* components *//
 import {
@@ -14,6 +14,7 @@ import {
   OrderDirection,
   ButtonPrimary,
   Chip,
+  FullScreenLoading,
 } from "../../components";
 
 //* hooks *//
@@ -93,7 +94,11 @@ const SummaryPage: NextPage = () => {
     );
   }
 
-  return <LoadingLayout title="Cargando" />;
+  return (
+    <ShopLayout title="Resumen de orden" pageDescription="Resumen de la orden">
+      <FullScreenLoading />
+    </ShopLayout>
+  );
 };
 
 export default SummaryPage;

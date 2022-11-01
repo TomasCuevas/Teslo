@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
 import { NextPage } from "next";
-import useSWR from "swr";
+import useSWRInmutable from "swr/immutable";
 import { MenuItem, Select } from "@mui/material";
 
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
@@ -8,8 +7,11 @@ import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 //* icons *//
 import { PeopleOutline } from "@mui/icons-material";
 
+//* components *//
+import { FullScreenLoading } from "../../components";
+
 //* layout *//
-import { AdminLayout, LoadingLayout } from "../../components/layouts";
+import { AdminLayout } from "../../components/layouts";
 
 //* hooks *//
 import { useAdmin } from "../../hooks";
@@ -21,30 +23,16 @@ import tesloApi from "../../axios/tesloApi";
 import { IUser } from "../../interfaces/user";
 
 const UsersPage: NextPage = () => {
-  const [users, setUsers] = useState<IUser[]>([]);
   const { isAdmin } = useAdmin("/", "/admin/users");
 
-  const { data } = useSWR<IUser[]>("/api/admin/users");
-
-  useEffect(() => {
-    if (data) {
-      setUsers(data);
-    }
-  }, [data]);
+  const { data: users = [] } = useSWRInmutable<IUser[]>("/api/admin/users", {
+    refreshInterval: 1000,
+  });
 
   const onRoleUpdated = async (userId: string, newRole: string) => {
-    const previousUsers = users.map((user) => ({ ...user }));
-    const updatedUsers = users.map((user) => ({
-      ...user,
-      role: userId === user._id ? newRole : user.role,
-    }));
-
-    setUsers(updatedUsers);
-
     try {
       await tesloApi.put("/admin/users", { userId, newRole });
     } catch (error) {
-      setUsers(previousUsers);
       console.log(error);
       alert("No se pudo actualizar el role del usuario.");
     }
@@ -123,7 +111,16 @@ const UsersPage: NextPage = () => {
     );
   }
 
-  return <LoadingLayout title="Cargando" />;
+  return (
+    <AdminLayout
+      title="Usuarios"
+      subtitle="Mantenimiento de usuarios"
+      icon={<PeopleOutline />}
+      pageDescription="Pagina de mantenimiento de usuarios para administradores"
+    >
+      <FullScreenLoading />
+    </AdminLayout>
+  );
 };
 
 export default UsersPage;

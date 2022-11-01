@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
-import useSWR from "swr";
+import useSWRInmutable from "swr/immutable";
 
 //* icons *//
 import {
@@ -15,10 +15,10 @@ import {
 } from "@mui/icons-material";
 
 //* components *//
-import { SummaryTile } from "../../components";
+import { FullScreenLoading, SummaryTile } from "../../components";
 
 //* layout *//
-import { AdminLayout, LoadingLayout } from "../../components/layouts";
+import { AdminLayout } from "../../components/layouts";
 
 //* hooks *//
 import { useAdmin } from "../../hooks";
@@ -30,9 +30,12 @@ const DashboardPage: NextPage = () => {
   const [refreshIn, setRefreshIn] = useState<number>(30);
   const { isAdmin } = useAdmin("/", "/admin");
 
-  const { data } = useSWR<DashboardSummaryResponse>("/api/admin/dashboard", {
-    refreshInterval: 30 * 1000,
-  });
+  const { data } = useSWRInmutable<DashboardSummaryResponse>(
+    "/api/admin/dashboard",
+    {
+      refreshInterval: 30 * 1000,
+    }
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -110,7 +113,16 @@ const DashboardPage: NextPage = () => {
     );
   }
 
-  return <LoadingLayout title="Cargando" />;
+  return (
+    <AdminLayout
+      title="Dashboard"
+      subtitle="Estadisticas generales"
+      icon={<DashboardOutlined />}
+      pageDescription="Dashboard principal de adminsitradores"
+    >
+      <FullScreenLoading />
+    </AdminLayout>
+  );
 };
 
 export default DashboardPage;
