@@ -37,7 +37,7 @@ const OrderPage: NextPage = () => {
   const { id } = router.query as { id: string };
 
   const [isPaying, setIsPaying] = useState<boolean>(false);
-  const { order } = useGetOrder(id, `/orders/${id}`);
+  const { order } = useGetOrder(id, `/api/orders/${id}`, `/orders/${id}`);
 
   if (order) {
     const { shippingAddress } = order;
@@ -94,7 +94,10 @@ const OrderPage: NextPage = () => {
               Resumen ({order.numberOfItems}) productos
             </h2>
             <hr className="my-4 text-gray/30" />
-            <OrderDirection shippingAddressProps={shippingAddress} />
+            <OrderDirection
+              shippingAddressProps={shippingAddress}
+              editable={false}
+            />
             <hr className="my-4 text-gray/30" />
             <OrderSummary summary={order} />
             <div className="mt-5 w-full">

@@ -9,7 +9,7 @@ interface Props {
   icon?: React.ReactNode;
   imageFullUrl?: string;
   pageDescription: string;
-  subtitle: string;
+  subtitle?: string;
   title: string;
 }
 
@@ -18,7 +18,7 @@ export const AdminLayout: React.FC<Props> = ({
   icon,
   imageFullUrl,
   pageDescription,
-  subtitle,
+  subtitle = "",
   title,
 }) => {
   return (

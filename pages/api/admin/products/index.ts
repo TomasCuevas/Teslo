@@ -3,14 +3,14 @@ import { isValidObjectId } from "mongoose";
 import { v2 as cloudinary } from "cloudinary";
 
 //* database *//
-import { connect } from "../../../database/config";
-import ProductModel from "../../../database/models/Product";
+import { connect } from "../../../../database/config";
+import ProductModel from "../../../../database/models/Product";
 
 //* utils *//
-import { verifyAdmin } from "../../../utils/verifyAdmin";
+import { verifyAdmin } from "../../../../utils/verifyAdmin";
 
 //* interfaces *//
-import { IProduct } from "../../../interfaces/products";
+import { IProduct } from "../../../../interfaces/products";
 
 type Data = { message: string } | IProduct[] | IProduct;
 

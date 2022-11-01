@@ -87,9 +87,9 @@ const ProductAdminPage: NextPage = () => {
   return (
     <AdminLayout
       title={"Producto"}
-      subtitle={`Editando: ${product.title}`}
+      subtitle="Editando:"
       icon={<DriveFileRenameOutline />}
-      pageDescription={`Pagina de edicion del producto ${product.title}`}
+      pageDescription="Pagina de edicion del producto"
     >
       <FullScreenLoading />
     </AdminLayout>

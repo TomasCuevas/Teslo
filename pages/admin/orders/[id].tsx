@@ -1,4 +1,5 @@
-import { NextPage, GetServerSideProps } from "next";
+import { NextPage } from "next";
+import { useRouter } from "next/router";
 
 //* icons *//
 import {
@@ -20,23 +21,23 @@ import {
 } from "../../../components";
 
 //* hooks *//
-import { useAdmin } from "../../../hooks";
+import { useAdmin, useGetOrder } from "../../../hooks";
 
-//* database *//
-import { getOrderById } from "../../../database/dbOrders";
+const OrderPageByAdmin: NextPage = () => {
+  const router = useRouter();
+  const { id } = router.query as { id: string };
 
-//* interfaces *//
-import { IOrder } from "../../../interfaces/order";
+  const { order } = useGetOrder(
+    id,
+    `/api/admin/orders/${id}`,
+    `/admin/orders/${id}`,
+    "/admin/orders"
+  );
+  const { isAdmin } = useAdmin("/", `/admin/orders/${id}`);
 
-interface Props {
-  order: IOrder;
-}
+  if (isAdmin && order) {
+    const { shippingAddress } = order;
 
-const OrderPageByAdmin: NextPage<Props> = ({ order }) => {
-  const { isAdmin } = useAdmin("/", `/admin/orders/${[order._id]}`);
-  const { shippingAddress } = order;
-
-  if (isAdmin) {
     return (
       <AdminLayout
         title="Resumen de la orden:"
@@ -67,7 +68,10 @@ const OrderPageByAdmin: NextPage<Props> = ({ order }) => {
               Resumen ({order.numberOfItems}) productos
             </h2>
             <hr className="my-4 text-gray/30" />
-            <OrderDirection shippingAddressProps={shippingAddress} />
+            <OrderDirection
+              shippingAddressProps={shippingAddress}
+              editable={false}
+            />
             <hr className="my-4 text-gray/30" />
             <OrderSummary summary={order} />
             <hr className="my-4 text-gray/30" />
@@ -94,33 +98,12 @@ const OrderPageByAdmin: NextPage<Props> = ({ order }) => {
   return (
     <AdminLayout
       title="Resumen de la orden:"
-      subtitle={`${order._id}`}
       icon={<AirplaneTicketOutlined />}
-      pageDescription={`Resumen de la orden ${order._id} para administrador`}
+      pageDescription="Resumen de la orden"
     >
       <FullScreenLoading />
     </AdminLayout>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { id = "" } = query;
-
-  const order = await getOrderById(id.toString());
-  if (!order) {
-    return {
-      redirect: {
-        destination: "/orders/history",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      order,
-    },
-  };
 };
 
 export default OrderPageByAdmin;

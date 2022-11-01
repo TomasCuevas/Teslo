@@ -1,14 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 //* database *//
-import { connect } from "../../../database/config";
-import ProductModel from "../../../database/models/Product";
+import { connect } from "../../../../database/config";
+import ProductModel from "../../../../database/models/Product";
 
 //* utils *//
-import { verifyAdmin } from "../../../utils";
+import { verifyAdmin } from "../../../../utils";
 
 //* interfaces *//
-import { IProduct } from "../../../interfaces/products";
+import { IProduct } from "../../../../interfaces/products";
 
 type Data = { message: string } | IProduct;
 
@@ -18,14 +18,17 @@ export default function handler(
 ) {
   switch (req.method) {
     case "GET":
-      return getProduct(req, res);
+      return generateNewProduct(req, res);
 
     default:
       return res.status(400).json({ message: "Bad request!" });
   }
 }
 
-const getProduct = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const generateNewProduct = async (
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) => {
   try {
     await verifyAdmin(req, res);
     await connect();

@@ -1,6 +1,6 @@
 export * from "./useAdmin";
 export * from "./useAuthenticated";
-export * from "./useCreateNewProduct";
+export * from "./useGenerateNewProduct";
 export * from "./useEditProduct";
 export * from "./useGetOrder";
 export * from "./useGetOrders";

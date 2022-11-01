@@ -15,11 +15,15 @@ import {
 import { DriveFileRenameOutline, SaveOutlined } from "@mui/icons-material";
 
 //* hooks *//
-import { useAdmin, useCreateNewProduct, useEditProduct } from "../../../hooks";
+import {
+  useAdmin,
+  useGenerateNewProduct,
+  useEditProduct,
+} from "../../../hooks";
 
 const NewProductAdminPage: NextPage = () => {
   const { isAdmin } = useAdmin();
-  const { product } = useCreateNewProduct();
+  const { product } = useGenerateNewProduct();
   const {
     control,
     errors,
@@ -41,10 +45,10 @@ const NewProductAdminPage: NextPage = () => {
   if (isAdmin && isReady && product) {
     return (
       <AdminLayout
-        title={"Producto"}
-        subtitle={`Editando: ${product.title}`}
+        title="Teslo | Nuevo producto"
+        subtitle="Creando nuevo producto"
         icon={<DriveFileRenameOutline />}
-        pageDescription={`Pagina de edicion del producto ${product.title}`}
+        pageDescription="Pagina de creacion de un producto"
       >
         <form className="my-4" onSubmit={handleSubmit(onSubmitForm)}>
           <div className="mb-4 w-full">
@@ -82,10 +86,10 @@ const NewProductAdminPage: NextPage = () => {
 
   return (
     <AdminLayout
-      title={"Producto"}
-      subtitle={`Editando: ${product.title}`}
+      title="Producto"
+      subtitle="Editando:"
       icon={<DriveFileRenameOutline />}
-      pageDescription={`Pagina de edicion del producto ${product.title}`}
+      pageDescription="Pagina de edicion de producto"
     >
       <FullScreenLoading />
     </AdminLayout>

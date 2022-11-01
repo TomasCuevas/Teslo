@@ -9,8 +9,10 @@ interface Return {
   product: IProduct;
 }
 
-export const useCreateNewProduct = (): Return => {
-  const { data: product, error } = useSWRInmutable("/api/admin/product");
+export const useGenerateNewProduct = (): Return => {
+  const { data: product, error } = useSWRInmutable(
+    "/api/admin/products/generate"
+  );
   const router = useRouter();
 
   if (error) {

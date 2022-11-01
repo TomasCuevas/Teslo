@@ -10,9 +10,13 @@ import { ShippingAddress } from "../../interfaces/order";
 
 interface Props {
   shippingAddressProps?: ShippingAddress;
+  editable?: boolean;
 }
 
-export const OrderDirection: React.FC<Props> = ({ shippingAddressProps }) => {
+export const OrderDirection: React.FC<Props> = ({
+  shippingAddressProps,
+  editable = true,
+}) => {
   const { shippingAddress } = useContext(CartContext);
 
   const [
@@ -39,9 +43,11 @@ export const OrderDirection: React.FC<Props> = ({ shippingAddressProps }) => {
     <div className="flex flex-col">
       <div className="flex justify-between">
         <h2 className="text-primary">Direccion de entrega</h2>
-        <NextLink href="/checkout/address" passHref>
-          <a className="text-secundary hover:underline">Editar</a>
-        </NextLink>
+        {editable ? (
+          <NextLink href="/checkout/address" passHref>
+            <a className="text-secundary hover:underline">Editar</a>
+          </NextLink>
+        ) : null}
       </div>
       <div className="flex justify-between">
         <h3 className="text-gray">
