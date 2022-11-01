@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import useSWRInmutable from "swr/immutable";
+import { IError } from "../interfaces/error";
 
 //* interfaces *//
 import { IProduct } from "../interfaces/products";
@@ -26,12 +27,13 @@ export const useSearchProducts = (query: string): Return => {
       setError(false);
       return;
     }
-    if (!searchProducts && allProducts) {
-      setProducts(allProducts);
-      setError(true);
-      return;
+    if (searchError && allProducts) {
+      if ((searchError as IError).status === 404) {
+        setProducts(allProducts);
+        setError(true);
+      }
     }
-  }, [searchProducts]);
+  }, [searchProducts, searchError]);
 
   return {
     error,

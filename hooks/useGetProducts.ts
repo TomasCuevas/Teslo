@@ -1,14 +1,14 @@
-import useSWR from "swr";
+import useSWRInmutable from "swr/immutable";
 
 //* interfaces *//
 import { IProduct } from "../interfaces/products";
 
 interface Returns {
-  products: [] | IProduct[];
+  products: IProduct[] | [];
 }
 
 export const useGetProducts = (url: string): Returns => {
-  const { data: products = [], error } = useSWR<IProduct[]>(`/api/${url}`);
+  const { data: products = [], error } = useSWRInmutable<IProduct[]>(`/api/${url}`);
 
   return {
     products,

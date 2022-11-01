@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import useSWR from "swr";
+import useSWRInmutable from "swr/immutable";
 
 //* interfaces *//
 import { IOrder } from "../interfaces/order";
@@ -10,10 +10,10 @@ interface Return {
 }
 
 export const useGetOrder = (id: string, query = "/"): Return => {
-  const { data: order, error } = useSWR<IOrder>(`/api/orders/${id}`);
+  const { data: order, error } = useSWRInmutable<IOrder>(`/api/orders/${id}`);
   const router = useRouter();
 
-  if (error) {
+  if (error && id) {
     if ((error as IError).status === 401) router.push(`/auth/login?p=${query}`);
     if ((error as IError).status === 404) router.push(`/orders/history`);
     if ((error as IError).status === 500) router.push(`/orders/history`);
