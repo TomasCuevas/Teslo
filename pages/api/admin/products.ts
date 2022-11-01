@@ -27,19 +27,25 @@ export default function handler(
       return updateProduct(req, res);
 
     default:
-      return res.status(200).json({ message: "Bad request!" });
+      return res.status(400).json({ message: "Bad request!" });
   }
 }
 
 //* GET *//
 const getProducts = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  await verifyAdmin(req, res);
+  try {
+    await verifyAdmin(req, res);
+    await connect();
 
-  await connect();
+    const products = await ProductModel.find().sort({ title: "asc" }).lean();
 
-  const products = await ProductModel.find().sort({ title: "asc" }).lean();
-
-  res.status(200).json(products);
+    return res.status(200).json(products);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Revisar logs del servidor.",
+    });
+  }
 };
 
 //* POST *//

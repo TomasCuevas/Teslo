@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import { NextPage } from "next";
 
 //* components *//
 import { ProductList, FullScreenLoading } from "../../components";
@@ -7,10 +7,10 @@ import { ProductList, FullScreenLoading } from "../../components";
 import { ShopLayout } from "../../components/layouts";
 
 //* hooks
-import { useProducts } from "../../hooks/useProducts";
+import { useGetProducts } from "../../hooks/useGetProducts";
 
 const HomePage: NextPage = () => {
-  const { products, isLoading } = useProducts("/products?gender=kid");
+  const { products } = useGetProducts("/products?gender=kid");
 
   return (
     <ShopLayout
@@ -19,7 +19,11 @@ const HomePage: NextPage = () => {
     >
       <h2 className="mb-1 text-xl font-light">Productos de Niños</h2>
 
-      {isLoading ? <FullScreenLoading /> : <ProductList products={products} />}
+      {products.length < 1 ? (
+        <FullScreenLoading />
+      ) : (
+        <ProductList products={products} />
+      )}
     </ShopLayout>
   );
 };

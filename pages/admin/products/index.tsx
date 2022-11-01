@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
@@ -11,10 +10,10 @@ import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { AddOutlined, CategoryOutlined } from "@mui/icons-material";
 
 //* layout *//
-import { AdminLayout, LoadingLayout } from "../../../components/layouts";
+import { AdminLayout } from "../../../components/layouts";
 
 //* components *//
-import { ButtonPrimary } from "../../../components";
+import { ButtonPrimary, FullScreenLoading } from "../../../components";
 
 //* hooks *//
 import { useAdmin } from "../../../hooks";
@@ -71,17 +70,10 @@ const columns: GridColDef[] = [
 import { IProduct } from "../../../interfaces/products";
 
 const ProductsPage: NextPage = () => {
-  const [products, setProducts] = useState<IProduct[]>([]);
   const { isAdmin } = useAdmin("/", "/admin/products");
+  const { data: products = [] } = useSWR<IProduct[]>("/api/admin/products");
 
-  const { data } = useSWR<IProduct[]>("/api/admin/products");
   const router = useRouter();
-
-  useEffect(() => {
-    if (data) {
-      setProducts(data);
-    }
-  }, [data]);
 
   const rows = products.map((product) => ({
     id: product._id,
@@ -101,7 +93,7 @@ const ProductsPage: NextPage = () => {
   if (isAdmin) {
     return (
       <AdminLayout
-        title={`Productos (${data?.length})`}
+        title={`Productos (${products?.length})`}
         subtitle="Mantenimiento de productos"
         icon={<CategoryOutlined />}
         pageDescription="Dashboard de mantenimiento de todos los productos"
@@ -116,6 +108,7 @@ const ProductsPage: NextPage = () => {
         <div className="mt-2 animate-fadeIn">
           <div className="h-[650px]">
             <DataGrid
+              className="animate-fadeIn"
               rows={rows}
               columns={columns}
               pageSize={10}
@@ -127,7 +120,16 @@ const ProductsPage: NextPage = () => {
     );
   }
 
-  return <LoadingLayout title="Cargando" />;
+  return (
+    <AdminLayout
+      title={`Productos (${products?.length})`}
+      subtitle="Mantenimiento de productos"
+      icon={<CategoryOutlined />}
+      pageDescription="Dashboard de mantenimiento de todos los productos"
+    >
+      <FullScreenLoading />
+    </AdminLayout>
+  );
 };
 
 export default ProductsPage;

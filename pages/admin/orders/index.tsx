@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { NextPage } from "next";
 import NextLink from "next/link";
 import useSWR from "swr";
@@ -100,16 +99,8 @@ import { IOrder } from "../../../interfaces/order";
 import { IUser } from "../../../interfaces/user";
 
 const OrdersPage: NextPage = () => {
-  const [orders, setOrders] = useState<IOrder[]>([]);
   const { isAdmin } = useAdmin("/", "/admin/orders");
-
-  const { data } = useSWR<IOrder[]>("/api/admin/orders");
-
-  useEffect(() => {
-    if (data) {
-      setOrders(data);
-    }
-  }, [data]);
+  const { data: orders = [] } = useSWR<IOrder[]>("/api/admin/orders");
 
   const rows = orders.map((order) => ({
     id: order._id,
@@ -135,6 +126,7 @@ const OrdersPage: NextPage = () => {
         <div className="mt-2 animate-fadeIn">
           <div className="h-[650px]">
             <DataGrid
+              className="animate-fadeIn"
               rows={rows}
               columns={columns}
               pageSize={10}

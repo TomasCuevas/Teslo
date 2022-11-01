@@ -1,5 +1,4 @@
 import { NextPage } from "next";
-import { useRouter } from "next/router";
 
 //* layout *//
 import { AdminLayout, LoadingLayout } from "../../../components/layouts";
@@ -15,30 +14,27 @@ import {
 import { DriveFileRenameOutline, SaveOutlined } from "@mui/icons-material";
 
 //* hooks *//
-import { useAdmin, useEditProduct, useGetProduct } from "../../../hooks";
+import { useAdmin, useCreateNewProduct, useEditProduct } from "../../../hooks";
 
-const ProductAdminPage: NextPage = () => {
-  const router = useRouter();
-  const { slug } = router.query as { slug: string };
-
-  const { isAdmin } = useAdmin("/", `/admin/products/${slug}`);
-  const { product } = useGetProduct(slug, "/admin/products");
+const NewProductAdminPage: NextPage = () => {
+  const { isAdmin } = useAdmin();
+  const { product } = useCreateNewProduct();
   const {
-    handleSubmit,
-    isSaving,
-    onSubmitForm,
     control,
     errors,
     getValues,
-    onChangeSize,
-    register,
+    handleSubmit,
+    isReady,
+    isSaving,
     newTag,
     onAddTag,
+    onChangeSize,
     onDeleteImage,
     onDeleteTag,
     onFilesSelected,
+    onSubmitForm,
+    register,
     setNewTag,
-    isReady,
   } = useEditProduct(product);
 
   if (isAdmin && isReady && product) {
@@ -86,4 +82,4 @@ const ProductAdminPage: NextPage = () => {
   return <LoadingLayout title="Cargando" />;
 };
 
-export default ProductAdminPage;
+export default NewProductAdminPage;

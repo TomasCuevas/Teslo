@@ -1,3 +1,4 @@
+import { Controller } from "react-hook-form";
 import {
   capitalize,
   Checkbox,
@@ -9,7 +10,6 @@ import {
   RadioGroup,
   TextField,
 } from "@mui/material";
-import { Controller } from "react-hook-form";
 
 //* valid data for form *//
 const validTypes = ["shirts", "pants", "hoodies", "hats"];

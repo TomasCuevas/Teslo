@@ -4,6 +4,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { connect } from "../../../database/config";
 import ProductModel from "../../../database/models/Product";
 
+//* utils *//
+import { verifyAdmin } from "../../../utils";
+
 //* interfaces *//
 import { IProduct } from "../../../interfaces/products";
 
@@ -15,39 +18,25 @@ export default function handler(
 ) {
   switch (req.method) {
     case "GET":
-      return getProductBySlug(req, res);
+      return getProduct(req, res);
 
     default:
-      return res.status(200).json({ message: "Bad request" });
+      return res.status(400).json({ message: "Bad request!" });
   }
 }
 
-const getProductBySlug = async (
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) => {
+const getProduct = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   try {
+    await verifyAdmin(req, res);
     await connect();
 
-    const { slug } = req.query;
-
-    const product = await ProductModel.findOne({ slug }).lean();
-
-    if (!product) {
-      return res.status(404).json({ message: "Producto no encontrado" });
-    }
-
-    product.images = product.images.map((image) => {
-      return image.includes("http")
-        ? image
-        : `${process.env.HOST_NAME}products/${image}`;
-    });
+    let product = await new ProductModel();
 
     return res.status(200).json(product);
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      message: "Revise logs del servidor.",
+      message: "Revisar logs del servidor.",
     });
   }
 };
