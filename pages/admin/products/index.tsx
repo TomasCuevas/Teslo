@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
 import Image from "next/future/image";
-import useSWR from "swr";
+import useSWRInmutable from "swr/immutable";
 
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 
@@ -67,11 +67,15 @@ const columns: GridColDef[] = [
 ];
 
 //* interfaces *//
+
 import { IProduct } from "../../../interfaces/products";
 
 const ProductsPage: NextPage = () => {
   const { isAdmin } = useAdmin("/", "/admin/products");
-  const { data: products = [] } = useSWR<IProduct[]>("/api/admin/products");
+  const { data: products = [] } = useSWRInmutable<IProduct[]>(
+    "/api/admin/products",
+    { refreshInterval: 2000 }
+  );
 
   const router = useRouter();
 

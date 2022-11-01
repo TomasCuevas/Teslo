@@ -10,7 +10,9 @@ interface Return {
 }
 
 export const useGetOrders = (url: string, query = "/"): Return => {
-  const { data: orders, error } = useSWRInmutable<IOrder[]>(url);
+  const { data: orders, error } = useSWRInmutable<IOrder[]>(url, {
+    refreshInterval: 1000,
+  });
   const router = useRouter();
 
   if (error) {
