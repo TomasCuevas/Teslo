@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import NextLink from "next/link";
-import useSWR from "swr";
+
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 
 //* icons *//
@@ -13,7 +13,7 @@ import { AdminLayout } from "../../../components/layouts";
 import { Chip, FullScreenLoading } from "../../../components";
 
 //* hooks *//
-import { useAdmin } from "../../../hooks";
+import { useAdmin, useGetOrders } from "../../../hooks";
 
 const columns: GridColDef[] = [
   {
@@ -95,27 +95,26 @@ const columns: GridColDef[] = [
 ];
 
 //* interfaces *//
-import { IOrder } from "../../../interfaces/order";
 import { IUser } from "../../../interfaces/user";
 
 const OrdersPage: NextPage = () => {
   const { isAdmin } = useAdmin("/", "/admin/orders");
-  const { data: orders = [] } = useSWR<IOrder[]>("/api/admin/orders");
+  const { orders } = useGetOrders("/api/admin/orders", "/admin/orders");
 
-  const rows = orders.map((order) => ({
-    id: order._id,
-    email: (order.user as IUser).email,
-    name: (order.user as IUser).name,
-    total: order.total.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    }),
-    noProducts: order.numberOfItems,
-    isPaid: order.isPaid,
-    createdAt: order.createdAt,
-  }));
+  if (isAdmin && orders) {
+    const rows = orders.map((order) => ({
+      id: order._id,
+      email: (order.user as IUser).email,
+      name: (order.user as IUser).name,
+      total: order.total.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      }),
+      noProducts: order.numberOfItems,
+      isPaid: order.isPaid,
+      createdAt: order.createdAt,
+    }));
 
-  if (isAdmin) {
     return (
       <AdminLayout
         title="Ordenes"

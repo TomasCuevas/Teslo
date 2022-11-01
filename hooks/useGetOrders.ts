@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import useSWR from "swr";
+import useSWRInmutable from "swr/immutable";
 
 //* interfaces *//
 import { IOrder } from "../interfaces/order";
@@ -9,8 +9,8 @@ interface Return {
   orders: IOrder[] | undefined;
 }
 
-export const useGetOrders = (query = "/"): Return => {
-  const { data: orders, error } = useSWR<IOrder[]>("/api/orders/all");
+export const useGetOrders = (url: string, query = "/"): Return => {
+  const { data: orders, error } = useSWRInmutable<IOrder[]>(url);
   const router = useRouter();
 
   if (error) {

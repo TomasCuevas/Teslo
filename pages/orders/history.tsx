@@ -102,7 +102,7 @@ const columns: GridColDef[] = [
 import { IUser } from "../../interfaces/user";
 
 const HistoryPage: NextPage = () => {
-  const { orders } = useGetOrders("/orders/history");
+  const { orders } = useGetOrders("/api/orders/all", "/orders/history");
 
   if (orders) {
     const rows = orders.map((order, index) => ({
