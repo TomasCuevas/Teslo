@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import NextLink from "next/link";
-import Image from "next/future/image";
 
 //* component *//
 import { NavbarSearcher } from "../../";
@@ -23,12 +22,10 @@ export const NavbarButtons: React.FC = () => {
           onClick={() => onToggleSearch(true)}
           className="hidden animate-fadeIn items-center justify-center rounded-full p-2 text-primary transition-all duration-500 hover:bg-light_gray sm:flex"
         >
-          <Image
+          <img
+            src="/icons/search.svg"
             alt="search icon"
             className="h-[20px] w-[20px] text-primary sm:h-[23px] sm:w-[23px]"
-            height={0}
-            src="/icons/search.svg"
-            width={0}
           />
         </button>
       )}
@@ -37,12 +34,10 @@ export const NavbarButtons: React.FC = () => {
         className="flex animate-fadeIn items-center justify-center rounded-full p-2 text-primary transition-all duration-500 hover:bg-light_gray sm:hidden"
         onClick={() => onToggleMenu(true)}
       >
-        <Image
+        <img
+          src="/icons/search.svg"
           alt="search icon"
           className="h-[20px] w-[20px] text-primary sm:h-[23px] sm:w-[23px]"
-          height={0}
-          src="/icons/search.svg"
-          width={0}
         />
       </button>
 
@@ -52,12 +47,10 @@ export const NavbarButtons: React.FC = () => {
             {numberOfItems > 9 ? <>+9</> : <>{numberOfItems}</>}
           </span>
           <button className="flex animate-fadeIn items-center justify-center rounded-full p-2 text-primary transition-all duration-500 group-hover:bg-light_gray">
-            <Image
+            <img
+              src="/icons/cart.svg"
               alt="cart icon"
               className="h-[20px] w-[20px] text-primary sm:h-[23px] sm:w-[23px]"
-              height={0}
-              src="/icons/cart.svg"
-              width={0}
             />
           </button>
         </a>

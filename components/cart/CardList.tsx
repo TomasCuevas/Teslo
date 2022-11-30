@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import NextLink from "next/link";
-import Image from "next/future/image";
 
 //* components *//
 import { ItemCounter } from "../";
@@ -43,13 +42,10 @@ export const CardList: React.FC<Props> = ({ editable = false, products }) => {
             <div className="group w-3/12">
               <NextLink href={`/product/${product.slug}`} passHref>
                 <a className="relative h-full w-full">
-                  <Image
+                  <img
                     src={product.image}
                     alt={product.title}
-                    width={0}
-                    height={0}
                     className=" w-full rounded-md"
-                    sizes="100%"
                   />
                   <div className="absolute left-0 top-0 h-full w-full transition-all duration-300 group-hover:bg-primary/5" />
                 </a>

@@ -6,7 +6,6 @@ import { UploadOutlined } from "@mui/icons-material";
 
 //* components *//
 import { ButtonPrimary, Chip } from "../";
-import Image from "next/future/image";
 
 //* interface *//
 interface Props {
@@ -107,13 +106,10 @@ export const ProductEditFormRight: React.FC<Props> = ({
               key={img}
             >
               <div className="flex flex-col gap-2">
-                <Image
+                <img
                   className="h-full w-full animate-fadeIn rounded-lg"
                   src={img}
                   alt={img}
-                  width={0}
-                  height={0}
-                  sizes="100%"
                 />
                 <ButtonPrimary
                   text="Borrar"

@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { useRouter } from "next/router";
-import Image from "next/future/image";
 
 //* contexts *//
 import { UiContext } from "../../../context/ui/UiContext";
@@ -45,12 +44,10 @@ export const SidebarSearcher: React.FC = () => {
           onClick={() => onSearchTerm()}
           type="button"
         >
-          <Image
+          <img
+            src="/icons/search.svg"
             alt="close icon"
             className="h-[20px] w-[20px] text-primary sm:h-[23px] sm:w-[23px]"
-            height={0}
-            src="/icons/search.svg"
-            width={0}
           />
         </button>
       </div>

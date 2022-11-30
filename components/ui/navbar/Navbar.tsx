@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import NextLink from "next/link";
-import Image from "next/future/image";
 
 //* components *//
 import { NavbarButtons, NavbarLink } from "../../";
@@ -17,12 +16,10 @@ export const Navbar: React.FC = () => {
         <section>
           <NextLink href="/" passHref>
             <a className="flex items-center gap-1">
-              <Image
+              <img
                 src="/logo-black.svg"
                 alt="teslo logo"
                 className="h-[35px] w-[35px]"
-                height={0}
-                width={0}
               />
               <h6 className="text-xl font-normal tracking-[1px]">Teslo</h6>
             </a>

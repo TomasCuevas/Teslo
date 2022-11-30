@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
-import Image from "next/future/image";
 import useSWRInmutable from "swr/immutable";
 
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
@@ -31,15 +30,12 @@ const columns: GridColDef[] = [
           target="__blank"
           rel="noreferrer"
         >
-          <Image
+          <img
             src={
               row.img.includes("https://") ? row.img : `/products/${row.img}`
             }
             alt={row.title}
             className="h-full w-full animate-fadeIn object-cover"
-            width={0}
-            height={0}
-            sizes="100%"
           />
         </a>
       );

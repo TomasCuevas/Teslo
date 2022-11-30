@@ -1,6 +1,5 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/router";
-import Image from "next/future/image";
 
 //* context *//
 import { UiContext } from "../../../context/ui/UiContext";
@@ -48,12 +47,10 @@ export const NavbarSearcher: React.FC = () => {
         onClick={() => onToggleSearch(false)}
         type="button"
       >
-        <Image
+        <img
+          src="/icons/close.svg"
           alt="close icon"
           className="h-[20px] w-[20px] text-primary sm:h-[23px] sm:w-[23px]"
-          height={0}
-          src="/icons/close.svg"
-          width={0}
         />
       </button>
     </div>
