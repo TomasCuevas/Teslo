@@ -29,7 +29,7 @@ Ultima actualización: 2022-12-6
     - [APIs de cliente](#apis-de-cliente)
     - [APIs de administrador](#apis-de-administrador)
 - [Estilo de la aplicacion](#estilo-de-la-aplicacion)
-- Ejecutar en modo desarrollo
+- [Ejecutar en modo desarrollo](#ejecutar-en-modo-desarrollo)
 
 ## Objetivo
 
