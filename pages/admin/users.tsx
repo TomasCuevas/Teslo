@@ -26,7 +26,7 @@ const UsersPage: NextPage = () => {
   const { isAdmin } = useAdmin("/", "/admin/users");
 
   const { data: users = [] } = useSWRInmutable<IUser[]>("/api/admin/users", {
-    refreshInterval: 1000,
+    refreshInterval: 1000 * 30,
   });
 
   const onRoleUpdated = async (userId: string, newRole: string) => {

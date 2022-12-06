@@ -9,7 +9,7 @@ import { ShopLayout } from "../../components/layouts";
 //* hooks
 import { useGetProducts } from "../../hooks/useGetProducts";
 
-const HomePage: NextPage = () => {
+const WomenPage: NextPage = () => {
   const { products } = useGetProducts("/products?gender=women");
 
   return (
@@ -28,4 +28,4 @@ const HomePage: NextPage = () => {
   );
 };
 
-export default HomePage;
+export default WomenPage;

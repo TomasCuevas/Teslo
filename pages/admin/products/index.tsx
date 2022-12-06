@@ -70,7 +70,7 @@ const ProductsPage: NextPage = () => {
   const { isAdmin } = useAdmin("/", "/admin/products");
   const { data: products = [] } = useSWRInmutable<IProduct[]>(
     "/api/admin/products",
-    { refreshInterval: 2000 }
+    { refreshInterval: 30 * 1000 }
   );
 
   const router = useRouter();

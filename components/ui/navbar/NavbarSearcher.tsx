@@ -10,11 +10,11 @@ export const NavbarSearcher: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isFocus, setIsFocus] = useState(false);
 
-  const { push } = useRouter();
+  const router = useRouter();
 
   const onSearchTerm = async () => {
     if (searchTerm.trim().length < 1) return;
-    push(`/search/${searchTerm}`);
+    router.push(`/search/${searchTerm}`);
   };
 
   return (
