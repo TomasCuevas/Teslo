@@ -60,7 +60,7 @@ const LoginPage: NextPage = () => {
       password,
     });
 
-    if (signInStatus?.ok === false) {
+    if ((signInStatus as any).ok === false) {
       setShowError(true);
       setTimeout(() => {
         setShowError(false);
