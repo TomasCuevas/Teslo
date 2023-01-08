@@ -52,9 +52,9 @@ const loginUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     });
   }
 
-  const { role, name, _id } = user;
+  const { role, name, id } = user;
 
-  const token = signToken(_id, email);
+  const token = signToken(id, email);
 
   return res.status(200).json({
     token,

@@ -21,7 +21,7 @@ export const useValidUser = (query = "/"): Return => {
 
   useEffect(() => {
     if (session?.user) {
-      setUserId((session.user as IUser)._id);
+      setUserId((session.user as IUser).id);
       setIsValidUser("valid");
     }
   }, [session]);

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
+import { getToken } from "next-auth/jwt";
 
 import { IOrder } from "../../../interfaces/order";
 
@@ -25,7 +25,7 @@ export default function handler(
 
 const getOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   try {
-    const session = await getSession({ req });
+    const session = await getToken({ req });
     if (!session) {
       return res.status(401).json({
         message: "Debe de estar autenticado",
@@ -41,7 +41,7 @@ const getOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       });
     }
 
-    if (order.user?.toString() !== (session.user as IUser)._id) {
+    if (order.user?.toString() !== (session.user as IUser).id) {
       return res.status(404).json({
         message: "No posee los permisos necesarios.",
       });

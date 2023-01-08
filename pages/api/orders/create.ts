@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
+import { getToken } from "next-auth/jwt";
 
 import { IOrder } from "../../../interfaces/order";
 import { IUser } from "../../../interfaces/user";
@@ -26,7 +26,7 @@ export default function handler(
 
 const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   try {
-    const session = await getSession({ req });
+    const session = await getToken({ req });
     if (!session) {
       return res.status(400).json({
         message: "Debe de estar autenticado.",
@@ -60,8 +60,8 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       });
     }
 
-    const { _id } = session.user as IUser;
-    const newOrder = new Order({ ...req.body, isPaid: false, user: _id });
+    const { id } = session.user as IUser;
+    const newOrder = new Order({ ...req.body, isPaid: false, user: id });
     await newOrder.save();
 
     return res.status(200).json(newOrder);

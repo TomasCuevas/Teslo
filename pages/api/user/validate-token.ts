@@ -55,10 +55,10 @@ const checkJWT = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     });
   }
 
-  const { _id, email, name, role } = user;
+  const { id, email, name, role } = user;
 
   return res.status(200).json({
-    token: signToken(_id, email),
+    token: signToken(id, email),
     user: {
       email,
       role,

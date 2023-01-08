@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import Credentials from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { IUser } from "../../../interfaces/user";
 
 //* database *//
 import {
@@ -11,7 +12,8 @@ import {
 export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   providers: [
-    Credentials({
+    CredentialsProvider({
+      type: "credentials",
       name: "Custom Login",
       credentials: {
         email: {
@@ -26,10 +28,12 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        return await checkUserEmailPassword(
-          credentials!.email,
-          credentials!.password
-        );
+        const data = {
+          email: credentials!.email,
+          password: credentials!.password,
+        };
+
+        return await checkUserEmailPassword(data.email, data.password);
       },
     }),
     GithubProvider({
@@ -59,7 +63,7 @@ export const authOptions: NextAuthOptions = {
     },
 
     async session({ session, token, user }) {
-      session.accessToken = token.accessToken;
+      (session as any).accesToken = token.accessToken;
       session.user = token.user as any;
 
       return session;

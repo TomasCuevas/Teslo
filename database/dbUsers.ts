@@ -15,10 +15,10 @@ export const checkUserEmailPassword = async (
 
   if (!bcrypt.compareSync(password, user.password!)) return null;
 
-  const { name, role, _id } = user;
+  const { name, role, id } = user;
 
   return {
-    _id,
+    id,
     email: email.toLowerCase(),
     name,
     role,
@@ -31,8 +31,8 @@ export const oAuthToDbUser = async (oAuthEmail: string, oAuthName: string) => {
   const user = await UserModel.findOne({ email: oAuthEmail });
 
   if (user) {
-    const { _id, name, email, role } = user;
-    return { _id, name, email, role };
+    const { id, name, email, role } = user;
+    return { id, name, email, role };
   }
 
   const newUser = await new UserModel({
@@ -43,6 +43,6 @@ export const oAuthToDbUser = async (oAuthEmail: string, oAuthName: string) => {
   });
   await newUser.save();
 
-  const { _id, name, email, role } = newUser;
-  return { _id, name, email, role };
+  const { id, name, email, role } = newUser;
+  return { id, name, email, role };
 };

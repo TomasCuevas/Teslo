@@ -88,9 +88,9 @@ const registerUser = async (
     });
   }
 
-  const { _id, role } = newUser;
+  const { id, role } = newUser;
 
-  const token = signToken(_id, email);
+  const token = signToken(id, email);
 
   return res.status(200).json({
     token,

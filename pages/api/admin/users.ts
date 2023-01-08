@@ -32,7 +32,8 @@ const getUsers = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   try {
     await verifyAdmin(req, res);
     await connect();
-    const users = await UserModel.find().select("-password").lean();
+
+    const users = await await UserModel.find().select("-password").lean();
 
     return res.status(200).json(users);
   } catch (error) {

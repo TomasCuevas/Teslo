@@ -83,7 +83,7 @@ const UsersPage: NextPage = () => {
   ];
 
   const rows = users.map((user) => ({
-    id: user._id,
+    id: (user as any)._id,
     email: user.email,
     name: user.name,
     role: user.role,
