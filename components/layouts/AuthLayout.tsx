@@ -22,7 +22,6 @@ export const AuthLayout: React.FC<Props> = ({
         <meta name="og:title" content={title} />
         <meta name="og:description" content={pageDescription} />
         {imageFullUrl && <meta name="og:image" content={imageFullUrl} />}
-        <link rel="icon" href="/logo.svg"></link>
       </Head>
 
       <main className="flex h-[calc(100vh_-_200px)] items-center justify-center">

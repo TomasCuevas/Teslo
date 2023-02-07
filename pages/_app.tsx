@@ -1,4 +1,5 @@
 import type { AppProps } from "next/app";
+import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { SWRConfig } from "swr";
@@ -28,6 +29,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           <AuthProvider>
             <CartProvider>
               <UiProvider>
+                <Head>
+                  <link rel="icon" type="image/x-icon" href="/logo.svg" />
+                </Head>
                 <Component {...pageProps} />
               </UiProvider>
             </CartProvider>

@@ -29,7 +29,6 @@ export const AdminLayout: React.FC<Props> = ({
         <meta name="og:title" content={title} />
         <meta name="og:description" content={pageDescription} />
         {imageFullUrl && <meta name="og:image" content={imageFullUrl} />}
-        <link rel="icon" href="/logo.svg"></link>
       </Head>
 
       <AdminNavbar />
